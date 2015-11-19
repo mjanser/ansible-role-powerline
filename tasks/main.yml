@@ -1,0 +1,31 @@
+---
+- name: "ensure python pip is installed"
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - python-pip
+
+- name: "ensure powerline is installed"
+  pip:
+    name: powerline-status
+
+- name: "ensure powerline is loaded in bashrc"
+  copy:
+    src: powerline.sh
+    dest: /etc/profile.d/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "ensure default top theme for powerline is configured"
+  lineinfile:
+    dest: /usr/local/lib/python2.7/dist-packages/powerline/config_files/config.json
+    line: "\t\t\"default_top_theme\": \"{{ powerline_default_top_theme }}\","
+    regexp: "default_top_theme"
+    insertbefore: "term_truecolor"
+
+- name: "ensure powerline for shell is configured"
+  template:
+    src: powerline-shell.json.j2
+    dest: /usr/local/lib/python2.7/dist-packages/powerline/config_files/themes/shell/default.json
