@@ -1,13 +1,16 @@
 ---
 galaxy_info:
   author: mjanser
-  description: Powerline on Ubuntu
+  description: Installs powerline on Linux distributions
   license: MIT
   min_ansible_version: 1.6
   platforms:
   - name: Ubuntu
     versions:
     - trusty
+  - name: Fedora
+    versions:
+    - 23
   categories:
   - system
 dependencies: []

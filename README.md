@@ -1,6 +1,6 @@
 # Ansible Role: powerline
 
-An Ansible role that installs powerline on Ubuntu.
+An Ansible role that installs powerline on Linux.
 
 ## Requirements
 

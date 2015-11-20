@@ -1,0 +1,4 @@
+---
+powerline_config_file: /usr/local/lib/python2.7/dist-packages/powerline/config_files/config.json
+powerline_themes_directory: /usr/local/lib/python2.7/dist-packages/powerline/config_files/themes
+powerline_bindings_directory: /usr/local/lib/python2.7/dist-packages/powerline/bindings

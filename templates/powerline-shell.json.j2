@@ -2,6 +2,9 @@
 	"segments": {
 		"left": [
 			{
+				"function": "powerline.segments.shell.mode"
+			},
+			{
 				"function": "powerline.segments.common.net.hostname",
 				"priority": 10
 			},
@@ -16,6 +19,10 @@
 			{
 				"function": "powerline.segments.shell.cwd",
 				"priority": 10
+                        },
+			{
+				"function": "powerline.segments.shell.jobnum",
+				"priority": 20
 			}{% if powerline_shell_vcs_branch %},
 			{
 				"function": "powerline.segments.common.vcs.branch",
@@ -23,5 +30,12 @@
 			}
 {% endif %}
 		]
+	},
+	"segment_data": {
+		"branch": {
+			"args": {
+				"status_colors": true
+			}
+		}
 	}
 }
