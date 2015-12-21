@@ -5,11 +5,30 @@
 - include: install-pip.yml
   when: "ansible_os_family != 'RedHat'"
 
-- name: "ensure powerline is loaded in shell"
+- name: "ensure old powerline script is not installed"
+  file:
+    path: /etc/profile.d/powerline.sh
+    state: absent
+  sudo: yes
+
+- name: "ensure powerline script is installed"
   template:
     src: powerline.sh.j2
-    dest: /etc/profile.d/powerline.sh
+    dest: /etc/bash_powerline.sh
   sudo: yes
+
+- name: "retrieve the list of home directories"
+  command: ls /home
+  register: home_dirs
+  changed_when: false
+
+- name: "ensure powerline is loaded for configured users"
+  lineinfile:
+    dest: "/home/{{ item }}/.bashrc"
+    line: "source /etc/bash_powerline.sh"
+  sudo: yes
+  when: "item in home_dirs.stdout_lines"
+  with_items: powerline_users
 
 - name: "ensure default top theme for powerline is configured"
   lineinfile:

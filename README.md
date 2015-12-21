@@ -12,6 +12,8 @@ Available variables are listed below, along with default values:
 
     powerline_default_top_theme: powerline
     powerline_shell_vcs_branch: true
+    powerline_users:
+      - vagrant
 
 ## Dependencies
 
