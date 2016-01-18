@@ -9,13 +9,13 @@
   file:
     path: /etc/profile.d/powerline.sh
     state: absent
-  sudo: yes
+  become: yes
 
 - name: "ensure powerline script is installed"
   template:
     src: powerline.sh.j2
     dest: /etc/bash_powerline.sh
-  sudo: yes
+  become: yes
 
 - name: "retrieve the list of home directories"
   command: ls /home
@@ -26,7 +26,7 @@
   lineinfile:
     dest: "/home/{{ item }}/.bashrc"
     line: "source /etc/bash_powerline.sh"
-  sudo: yes
+  become: yes
   when: "item in home_dirs.stdout_lines"
   with_items: powerline_users
 
@@ -36,16 +36,16 @@
     line: "\t\t\"default_top_theme\": \"{{ powerline_default_top_theme }}\","
     regexp: "default_top_theme"
     insertbefore: "term_truecolor"
-  sudo: yes
+  become: yes
 
 - name: "ensure powerline for shell is configured"
   template:
     src: powerline-shell.json.j2
     dest: "{{ powerline_themes_directory }}/shell/default.json"
-  sudo: yes
+  become: yes
 
 - name: "ensure powerline for tmux is configured"
   template:
     src: powerline-tmux.json.j2
     dest: "{{ powerline_themes_directory }}/tmux/default.json"
-  sudo: yes
+  become: yes

@@ -8,10 +8,10 @@
   with_items:
     - git
     - python-pip
-  sudo: yes
+  become: yes
   when: ansible_pkg_mgr == 'apt'
 
 - name: "ensure powerline is installed"
   pip:
     name: powerline-status
-  sudo: yes
+  become: yes
