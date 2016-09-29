@@ -1,17 +1,15 @@
 ---
-- name: "include variables for pip installation of powerline"
+- name: include variables for pip installation of powerline
   include_vars: pip.yml
 
-- name: "ensure python pip is installed"
+- name: ensure python pip is installed
   apt:
     name: "{{ item }}"
   with_items:
     - git
     - python-pip
-  become: yes
   when: ansible_pkg_mgr == 'apt'
 
-- name: "ensure powerline is installed"
+- name: ensure powerline is installed
   pip:
     name: powerline-status
-  become: yes

@@ -1,51 +1,45 @@
 ---
 - include: install-dnf.yml
-  when: "ansible_os_family == 'RedHat'"
+  when: ansible_os_family == 'RedHat'
 
 - include: install-pip.yml
-  when: "ansible_os_family != 'RedHat'"
+  when: ansible_os_family != 'RedHat'
 
-- name: "ensure old powerline script is not installed"
+- name: ensure old powerline script is not installed
   file:
     path: /etc/profile.d/powerline.sh
     state: absent
-  become: yes
 
-- name: "ensure powerline script is installed"
+- name: ensure powerline script is installed
   template:
     src: powerline.sh.j2
     dest: /etc/bash_powerline.sh
-  become: yes
 
-- name: "retrieve the list of home directories"
+- name: retrieve the list of home directories
   command: ls /home
   register: home_dirs
   changed_when: false
 
-- name: "ensure powerline is loaded for configured users"
+- name: ensure powerline is loaded for configured users
   lineinfile:
     dest: "/home/{{ item }}/.bashrc"
     line: "source /etc/bash_powerline.sh"
-  become: yes
-  when: "item in home_dirs.stdout_lines"
-  with_items: powerline_users
+  when: item in home_dirs.stdout_lines
+  with_items: "{{ powerline_users }}"
 
-- name: "ensure default top theme for powerline is configured"
+- name: ensure default top theme for powerline is configured
   lineinfile:
     dest: "{{ powerline_config_file }}"
     line: "\t\t\"default_top_theme\": \"{{ powerline_default_top_theme }}\","
     regexp: "default_top_theme"
     insertbefore: "term_truecolor"
-  become: yes
 
-- name: "ensure powerline for shell is configured"
+- name: ensure powerline for shell is configured
   template:
     src: powerline-shell.json.j2
     dest: "{{ powerline_themes_directory }}/shell/default.json"
-  become: yes
 
-- name: "ensure powerline for tmux is configured"
+- name: ensure powerline for tmux is configured
   template:
     src: powerline-tmux.json.j2
     dest: "{{ powerline_themes_directory }}/tmux/default.json"
-  become: yes

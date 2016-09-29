@@ -1,11 +1,10 @@
 ---
-- name: "include variables for dnf installation of powerline"
+- name: include variables for dnf installation of powerline
   include_vars: dnf.yml
 
-- name: "ensure packages for powerline are installed"
-  dnf:
+- name: ensure packages for powerline are installed
+  package:
     name: "{{ item }}"
   with_items:
     - powerline
     - powerline-docs
-  become: yes
