@@ -11,6 +11,7 @@ galaxy_info:
   - name: Fedora
     versions:
     - 23
+    - 24
   categories:
   - system
 dependencies: []
