@@ -57,3 +57,23 @@
   become: yes
   with_items: "{{ powerline_home_dirs }}"
   when: check_tmux_conf.stat.exists == True
+
+- name: "Check if vim-powerline is installed"
+  stat: path="/usr/share/vim/vimfiles/plugin/powerline.vim"
+  register: check_vim_powerline
+
+- name: "Enable powerline for vim"
+  blockinfile:
+    dest: "{{ item }}/.vimrc"
+    block: |
+      python3 from powerline.vim import setup as powerline_setup
+      python3 powerline_setup()
+      python3 del powerline_setup
+      set laststatus=2
+      set t_Co=256
+    create: yes
+    mode: 0644
+    marker: "\" {mark} ANSIBLE MANAGED BLOCK"
+  become: yes
+  with_items: "{{ powerline_home_dirs }}"
+  when: check_vim_powerline.stat.exists == True

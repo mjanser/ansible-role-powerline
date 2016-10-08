@@ -19,3 +19,13 @@
   dnf: name="tmux-powerline" state=present
   become: yes
   when: check_tmux.rc == 0
+
+- name: Check if vim is installed
+  command: which vim
+  become: yes
+  register: check_vim
+
+- name: Install package vim-powerline if vim is installed
+  dnf: name="vim-powerline" state=present
+  become: yes
+  when: check_vim.rc == 0
