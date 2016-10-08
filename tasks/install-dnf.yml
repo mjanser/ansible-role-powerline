@@ -9,3 +9,13 @@
     - powerline
     - powerline-docs
   become: yes
+
+- name: Check if tmux is installed
+  command: which tmux
+  become: yes
+  register: check_tmux
+
+- name: Install package powerline-tmux if tmux is installed
+  dnf: name="tmux-powerline" state=present
+  become: yes
+  when: check_tmux.rc == 0

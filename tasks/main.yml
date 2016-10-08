@@ -43,3 +43,17 @@
     src: powerline-tmux.json.j2
     dest: "{{ powerline_themes_directory }}/tmux/default.json"
   become: yes
+
+- name: "Check if tmux-powerline is installed"
+  stat: path="/usr/share/tmux/powerline.conf"
+  register: check_tmux_conf
+
+- name: "Enable powerline for tmux"
+  lineinfile:
+    dest: "{{ item }}/.tmux.conf"
+    line: "source /usr/share/tmux/powerline.conf"
+    create: yes
+    mode: 0644
+  become: yes
+  with_items: "{{ powerline_home_dirs }}"
+  when: check_tmux_conf.stat.exists == True
