@@ -11,26 +11,13 @@
     state: absent
   become: yes
 
-- name: "ensure powerline script is installed"
+- name: "Install powerline script"
   template:
     src: powerline.sh.j2
     dest: /etc/bash_powerline.sh
   become: yes
 
-- name: "retrieve the list of home directories"
-  command: ls /home
-  register: home_dirs
-  changed_when: false
-
-- name: "ensure powerline is loaded for configured users"
-  lineinfile:
-    dest: "/home/{{ item }}/.bashrc"
-    line: "source /etc/bash_powerline.sh"
-  become: yes
-  when: "item in home_dirs.stdout_lines"
-  with_items: powerline_users
-
-- name: "ensure default top theme for powerline is configured"
+- name: "Configure top theme for powerline"
   lineinfile:
     dest: "{{ powerline_config_file }}"
     line: "\t\t\"default_top_theme\": \"{{ powerline_default_top_theme }}\","
@@ -38,13 +25,20 @@
     insertbefore: "term_truecolor"
   become: yes
 
-- name: "ensure powerline for shell is configured"
+- name: "Configure powerline for shell"
   template:
     src: powerline-shell.json.j2
     dest: "{{ powerline_themes_directory }}/shell/default.json"
   become: yes
 
-- name: "ensure powerline for tmux is configured"
+- name: "Enable powerline in bash shell"
+  lineinfile:
+    dest: "{{ item }}/.bashrc"
+    line: "source /etc/bash_powerline.sh"
+  become: yes
+  with_items: "{{ powerline_home_dirs }}"
+
+- name: "Configure powerline for tmux"
   template:
     src: powerline-tmux.json.j2
     dest: "{{ powerline_themes_directory }}/tmux/default.json"
