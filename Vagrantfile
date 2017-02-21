@@ -1,18 +1,23 @@
 Vagrant.configure('2') do |config|
-  config.vm.box = 'fgrehm/trusty64-lxc'
+  config.vm.box = 'nhinds/xenial64'
+
+  config.vm.define 'ubuntu-xenial' do |vmconfig|
+    vmconfig.vm.box = 'nhinds/xenial64'
+    vmconfig.vm.hostname = 'ubuntu-xenial'
+  end
 
   config.vm.define 'ubuntu-trusty' do |vmconfig|
     vmconfig.vm.box = 'fgrehm/trusty64-lxc'
     vmconfig.vm.hostname = 'ubuntu-trusty'
   end
 
-  config.vm.define 'fedora-24' do |vmconfig|
-    vmconfig.vm.box = 'obnox/fedora24-64-lxc'
-    vmconfig.vm.hostname = 'fedora-24'
+  config.vm.define 'fedora-25' do |vmconfig|
+    vmconfig.vm.box = 'mjanser/fedora25-64-lxc'
+    vmconfig.vm.hostname = 'fedora-25'
   end
 
-  config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "playbook.yml"
+  config.vm.provision 'ansible_local' do |ansible|
+    ansible.playbook = 'playbook.yml'
     ansible.sudo = true
   end
 
