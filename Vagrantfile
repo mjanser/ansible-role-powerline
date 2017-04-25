@@ -47,6 +47,11 @@ test -n "$(grep -L 'WARNING' /tmp/ansible.log)" \
 grep -q "changed=0.*failed=0" /tmp/ansible.log \
     && { echo "Idempotence test: pass"; } \
     || { echo "Idempotence test: fail" && exit 1; }
+
+ansible-playbook playbook.yml --connection local --check 2>&1 | grep -q "changed=0.*failed=0" \
+    && { echo "Check mode: pass"; } \
+    || { echo "Check mode: fail" && exit 1; }
+
 SCRIPT
   end
 end

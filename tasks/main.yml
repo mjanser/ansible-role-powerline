@@ -19,6 +19,7 @@
   command: ls /home
   register: home_dirs
   changed_when: false
+  check_mode: no
 
 - name: ensure powerline is loaded for configured users
   lineinfile:
