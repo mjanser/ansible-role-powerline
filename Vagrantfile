@@ -6,9 +6,9 @@ Vagrant.configure('2') do |config|
     vmconfig.vm.hostname = 'ubuntu-xenial'
   end
 
-  config.vm.define 'ubuntu-trusty' do |vmconfig|
-    vmconfig.vm.box = 'fgrehm/trusty64-lxc'
-    vmconfig.vm.hostname = 'ubuntu-trusty'
+  config.vm.define 'debian-stretch' do |vmconfig|
+    vmconfig.vm.box = 'debian/stretch64'
+    vmconfig.vm.hostname = 'debian-stretch'
   end
 
   config.vm.define 'fedora-25' do |vmconfig|

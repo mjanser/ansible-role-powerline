@@ -1,14 +1,9 @@
 ---
-- include: install-dnf.yml
-  when: ansible_os_family == 'RedHat'
+- include_vars: "{{ ansible_os_family|lower }}.yml"
 
-- include: install-pip.yml
-  when: ansible_os_family != 'RedHat'
-
-- name: ensure old powerline script is not installed
-  file:
-    path: /etc/profile.d/powerline.sh
-    state: absent
+- name: ensure package is installed
+  package:
+    name: powerline
 
 - name: ensure powerline script is installed
   template:
@@ -25,6 +20,9 @@
   lineinfile:
     dest: "/home/{{ item }}/.bashrc"
     line: "source /etc/bash_powerline.sh"
+    create: yes
+    owner: "{{ item }}"
+    group: "{{ item }}"
   when: item in home_dirs.stdout_lines
   with_items: "{{ powerline_users }}"
 
