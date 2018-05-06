@@ -10,7 +10,6 @@ galaxy_info:
         - stretch
     - name: Ubuntu
       versions:
-        - xenial
         - bionic
     - name: Fedora
   galaxy_tags:
