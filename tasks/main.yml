@@ -3,17 +3,8 @@
 
 - name: ensure powerline package is installed
   package:
-    name: powerline
-
-- name: ensure vim-powerline package is installed
-  package:
-    name: vim-powerline
-  when: powerline_vim
-
-- name: ensure tmux-powerline package is installed
-  package:
-    name: tmux-powerline
-  when: powerline_tmux
+    name: "{{ item }}"
+  with_items: "{{ powerline_packages }}"
 
 - name: ensure powerline script is installed
   template:
