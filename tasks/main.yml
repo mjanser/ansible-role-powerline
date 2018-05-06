@@ -1,9 +1,10 @@
 ---
 - include_vars: "{{ ansible_os_family|lower }}.yml"
 
-- name: ensure package is installed
+- name: ensure powerline package is installed
   package:
-    name: powerline
+    name: "{{ item }}"
+  with_items: "{{ powerline_packages }}"
 
 - name: ensure powerline script is installed
   template:
@@ -15,16 +16,6 @@
   register: home_dirs
   changed_when: false
   check_mode: no
-
-- name: ensure powerline is loaded for configured users
-  lineinfile:
-    dest: "/home/{{ item }}/.bashrc"
-    line: "source /etc/bash_powerline.sh"
-    create: yes
-    owner: "{{ item }}"
-    group: "{{ item }}"
-  when: item in home_dirs.stdout_lines
-  with_items: "{{ powerline_users }}"
 
 - name: ensure default top theme for powerline is configured
   lineinfile:

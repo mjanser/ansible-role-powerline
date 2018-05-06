@@ -1,14 +1,19 @@
 ---
-language: python
-python: "2.7"
+services: docker
+
+env:
+  - DISTRO=fedora RELEASE=27 ANSIBLE=2.2
+  - DISTRO=fedora RELEASE=27 ANSIBLE=2.4
+  - DISTRO=fedora RELEASE=27 ANSIBLE=2.5
+  - DISTRO=debian RELEASE=9 ANSIBLE=2.5
+  - DISTRO=ubuntu RELEASE=1804 ANSIBLE=2.5
 
 install:
-  - pip install ansible
-  - ln -s . vagrant
-  - echo "[default]\nroles_path = ." > ansible.cfg
+  - wget -O tests/test.sh https://gist.github.com/mjanser/8e2ea2f84b8c828267c86d9745d175dd/raw
+  - chmod +x tests/test.sh
 
 script:
-  - ansible-playbook playbook.yml --syntax-check
+  - ./tests/test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

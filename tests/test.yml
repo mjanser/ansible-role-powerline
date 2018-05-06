@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - role_under_test
+  vars:
+    powerline_vim: yes
+    powerline_tmux: yes

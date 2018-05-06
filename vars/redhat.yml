@@ -1,4 +1,10 @@
 ---
+powerline_packages:
+  - powerline
+  - powerline-docs
+  - powerline-fonts
+  - vim-powerline
+  - tmux-powerline
 powerline_config_file: /etc/xdg/powerline/config.json
 powerline_themes_directory: /etc/xdg/powerline/themes
 powerline_bindings_directory: /usr/share/powerline
